@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/JdbcJava" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/LowerCheck" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jdbconnectionToMysql" vcs="Git" />
   </component>
 </project>
