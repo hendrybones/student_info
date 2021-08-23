@@ -33,6 +33,7 @@ class MainTest {
     }
     @Test
     public void search() throws SQLException, ClassNotFoundException {
+
         Assertions.assertEquals("tuo4 software male2-04-1021 23-5-2019",new Main().searchStudent("tuo4"));
 
 
@@ -41,7 +42,7 @@ class MainTest {
     @Test
     public void delete() throws SQLException, ClassNotFoundException {
         String sql="delete from student where regNo=?;";
-       Assertions.assertEquals(1,new Main().deleteStudent("tuo1"));
+       Assertions.assertEquals(1,new Main().deleteStudent("tuo4"));
 
     }
     @Test
