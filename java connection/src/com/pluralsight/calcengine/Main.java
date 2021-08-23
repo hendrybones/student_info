@@ -29,13 +29,13 @@ public class Main {
                 viewStudent();
                 break;
             case 3:
-//                updateStudent();
+               updateStudent();
                 break;
             case 4:
-//                deleteStudent();
+               deleteStudent();
                 break;
             case 5:
-//                searchStudent();
+                searchStudent();
                 break;
             default:
                 System.out.println("select the correct option");
@@ -81,20 +81,21 @@ public class Main {
         return a;
     }
 
-    public static int updateStudent(String regNo1,String regN02) throws SQLException, ClassNotFoundException {
+    public static int updateStudent() throws SQLException, ClassNotFoundException {
         int i = 0;
         try {
             DbUtil db = new DbUtil();
             Connection con = db.getConnection();
-//            Scanner input = new Scanner(System.in);
-//            System.out.println("enter reg no");
-//            String inputName = input.nextLine();
-//            System.out.println("enter new regNo");
-//            String inputReg = input.nextLine();
+            Scanner input = new Scanner(System.in);
+
+            System.out.println("enter reg no");
+            String inputName = input.nextLine();
+            System.out.println("enter new regNo");
+            String inputReg = input.nextLine();
             String sql = "update student set regNo=? where regNo=?;";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, regNo1);
-            stmt.setString(2, regN02);
+            stmt.setString(1, inputName);
+            stmt.setString(2, inputReg);
             i = stmt.executeUpdate();
             if (i > 0) {
                 System.out.println("record updated successfully");
@@ -119,17 +120,17 @@ public class Main {
             System.out.println(c);
         }
     }
-    public static int deleteStudent(String regNo) throws SQLException, ClassNotFoundException {
+    public static int deleteStudent() throws SQLException, ClassNotFoundException {
         int i = 0;
         try {
             DbUtil db = new DbUtil();
             Connection con = db.getConnection();
-//            System.out.println("enter regNo to delete");
-//            Scanner scanner = new Scanner(System.in);
-//            String inputReg = scanner.nextLine();
+            System.out.println("enter regNo to delete");
+            Scanner scanner = new Scanner(System.in);
+            String inputReg = scanner.nextLine();
             String sql = "delete from student where regNo=?;";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, regNo);
+            stmt.setString(1,inputReg);
             i = stmt.executeUpdate();
             if (i > 0) {
                 System.out.println("deleted the record from the database");
@@ -143,17 +144,17 @@ public class Main {
         return i;
 
     }
-    public static String searchStudent(String b)throws SQLException, ClassNotFoundException {
+    public static String searchStudent()throws SQLException, ClassNotFoundException {
         String a ="";
         try {
             DbUtil db = new DbUtil();
             Connection con = db.getConnection();
-//            System.out.println("enter the regNo to search");
-//            Scanner input = new Scanner(System.in);
-//            String inputReg = input.nextLine();
+            System.out.println("enter the regNo to search");
+            Scanner input = new Scanner(System.in);
+            String inputReg = input.nextLine();
             String sql = "select*from student where regNo=?;";
             PreparedStatement stmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            stmt.setString(1, b);
+            stmt.setString(1, inputReg);
             ResultSet rs = stmt.executeQuery();
             if (rs.next() == false) {
                 System.out.println("there is no such record in the database");

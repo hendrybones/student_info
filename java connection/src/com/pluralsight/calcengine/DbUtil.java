@@ -5,7 +5,7 @@ import java.sql.*;
 public class DbUtil {
     private Connection connection;
     private Statement statement;
-    String url = "jdbc:mysql://localhost:3306";
+    String url = "jdbc:mysql://localhost:3306/hendryTech";
     String root = "root";
     String password = "";
     final String className="com.mysql.jdbc.Driver";
