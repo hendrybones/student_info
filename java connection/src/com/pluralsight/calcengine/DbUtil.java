@@ -30,7 +30,8 @@ public class DbUtil {
         return statement.executeUpdate(query);
     }
     public void closeConnections() throws SQLException {
-        connection.close();
         statement.close();
+        connection.close();
+
     }
 }

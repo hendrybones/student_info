@@ -29,13 +29,13 @@ public class Main {
                 viewStudent();
                 break;
             case 3:
-                updateStudent();
+//                updateStudent();
                 break;
             case 4:
-                deleteStudent();
+//                deleteStudent();
                 break;
             case 5:
-                searchStudent();
+//                searchStudent();
                 break;
             default:
                 System.out.println("select the correct option");
@@ -64,7 +64,8 @@ public class Main {
         insertStudentDetails(regNo, course, gender, date, da);
     }
 
-    private static void insertStudentDetails(String regNo, String course, String gender, String date, String da) throws SQLException, ClassNotFoundException {
+    public static int insertStudentDetails(String regNo, String course, String gender, String date, String da) throws SQLException, ClassNotFoundException {
+
         DbUtil db=new DbUtil();
         Connection con=db.getConnection();
         String sql="insert into student values(?,?,?,?,?);";
@@ -74,37 +75,39 @@ public class Main {
         stmt.setString(3, gender);
         stmt.setString(4, date);
         stmt.setString(5, da);
-        stmt.executeUpdate();
+        int a= stmt.executeUpdate();
         System.out.println("record inserted successfully");
-        db.closeConnections();
+//        db.closeConnections();
+        return a;
     }
 
-    public static void updateStudent() throws SQLException, ClassNotFoundException {
+    public static int updateStudent(String regNo1,String regN02) throws SQLException, ClassNotFoundException {
+        int i = 0;
         try {
-            DbUtil db=new DbUtil();
-            Connection con=db.getConnection();
-            Scanner input=new Scanner(System.in);
-            System.out.println("enter reg no");
-            String inputName=input.nextLine();
-            System.out.println("enter new regNo");
-            String inputReg=input.nextLine();
-            String sql="update student set regNo=? where regNo=?;";
-            PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setString(2,inputName);
-            stmt.setString(1,inputReg);
-            int i=stmt.executeUpdate();
-            if(i>0){
+            DbUtil db = new DbUtil();
+            Connection con = db.getConnection();
+//            Scanner input = new Scanner(System.in);
+//            System.out.println("enter reg no");
+//            String inputName = input.nextLine();
+//            System.out.println("enter new regNo");
+//            String inputReg = input.nextLine();
+            String sql = "update student set regNo=? where regNo=?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, regNo1);
+            stmt.setString(2, regN02);
+            i = stmt.executeUpdate();
+            if (i > 0) {
                 System.out.println("record updated successfully");
-            }
-            else
-            {
+            } else {
                 System.out.println("no such record updated in the database");
             }
             db.closeConnections();
 
-        }catch (Exception e){
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return i;
 
     }
     public  static  void viewStudent()throws SQLException, ClassNotFoundException{
@@ -112,58 +115,62 @@ public class Main {
         Connection con=db.getConnection();
         ResultSet rs=db.readData("select * from student");
         while(rs.next()){
-            System.out.println(rs.getString(1) +" "+ rs.getString(2)+" " +rs.getString(3));
+            String c=rs.getString(1) +" "+ rs.getString(2)+" " +rs.getString(3);
+            System.out.println(c);
         }
     }
-    public static void deleteStudent() throws SQLException, ClassNotFoundException {
+    public static int deleteStudent(String regNo) throws SQLException, ClassNotFoundException {
+        int i = 0;
         try {
-            DbUtil db=new DbUtil();
-            Connection con=db.getConnection();
-            System.out.println("enter regNo to delete");
-            Scanner scanner=new Scanner(System.in);
-            String inputReg=scanner.nextLine();
-            String sql="delete from student where regNo=?;";
-            PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setString(1,inputReg);
-            int i=stmt.executeUpdate();
-            if (i>0){
+            DbUtil db = new DbUtil();
+            Connection con = db.getConnection();
+//            System.out.println("enter regNo to delete");
+//            Scanner scanner = new Scanner(System.in);
+//            String inputReg = scanner.nextLine();
+            String sql = "delete from student where regNo=?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, regNo);
+            i = stmt.executeUpdate();
+            if (i > 0) {
                 System.out.println("deleted the record from the database");
-            }
-            else
-            {
+            } else {
                 System.out.println("no such record in the database");
             }
             db.closeConnections();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return i;
 
     }
-    public static void searchStudent()throws SQLException, ClassNotFoundException{
+    public static String searchStudent(String b)throws SQLException, ClassNotFoundException {
+        String a ="";
         try {
-            DbUtil db=new DbUtil();
-            Connection con=db.getConnection();
-            System.out.println("enter the regNo to search");
-            Scanner input=new Scanner(System.in);
-            String inputReg=input.nextLine();
-            String sql="select*from student where regNo=?;";
-            PreparedStatement stmt=con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            stmt.setString(1,inputReg);
-            ResultSet rs=stmt.executeQuery();
-            if (rs.next()==false){
+            DbUtil db = new DbUtil();
+            Connection con = db.getConnection();
+//            System.out.println("enter the regNo to search");
+//            Scanner input = new Scanner(System.in);
+//            String inputReg = input.nextLine();
+            String sql = "select*from student where regNo=?;";
+            PreparedStatement stmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            stmt.setString(1, b);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() == false) {
                 System.out.println("there is no such record in the database");
-            }
-            else {
+            } else {
                 rs.previous();
-                while (rs.next()){
-                    System.out.println(rs.getString(1)+" "+ rs.getString(2)+" " +rs.getString(3)+
-                            rs.getString(4)+" "+rs.getString(5));
+                while (rs.next()) {
+                    a = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) +
+                            rs.getString(4) + " " + rs.getString(5);
+                    System.out.println(a);
                 }
             }
+
             db.closeConnections();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return a;
 
     }
 
